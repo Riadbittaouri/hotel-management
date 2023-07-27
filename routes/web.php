@@ -6,22 +6,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 
-
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-
-
-
 Route::get('/', function () {
     return view('index');
 });
@@ -29,8 +13,6 @@ Route::get('/', function () {
 Route::get('/index', function () {
     return view('index');
 });
-
-
 
 Route::get('/rooms', function () {
     return view('rooms');
@@ -45,21 +27,19 @@ Route::get('/contact', function () {
 });
 Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
 
-
-
+// Login and Logout Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/login', [AdminController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AdminController::class, 'login'])->name('login.post');
-Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
-
+// Administration and Dashboard Routes
 Route::get('/administration', function () {
     return view('administration'); // This will load the 'administration.blade.php' view.
-})->name('administration');
+})->middleware('auth')->name('administration');
 
 Route::get('/dashboard', function () {
     return view('dashboard'); // This will load the 'dashboard.blade.php' view.
-})->name('dashboard');
+})->middleware('auth')->name('dashboard');
 
+// AuthController login route
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
