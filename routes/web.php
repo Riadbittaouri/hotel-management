@@ -5,7 +5,27 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
+// Existing routes using Route::middleware and Route::prefix
+Route::middleware(['auth', 'prevent.dashboard'])->group(function () {
+    Route::prefix('admin')->group(function () {
+        // Add your existing routes here
+    });
+});
+
+// New user management routes
+Route::middleware(['auth', 'prevent.dashboard'])->group(function () {
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+});
+
+// Your other existing routes
 Route::get('/', function () {
     return view('index');
 });
@@ -25,6 +45,7 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return view('contact');
 });
+
 Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
 
 // Login and Logout Routes
@@ -34,12 +55,32 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Administration and Dashboard Routes
 Route::get('/administration', function () {
-    return view('administration'); // This will load the 'administration.blade.php' view.
-})->middleware('auth')->name('administration');
+    return view('administration');
+})->middleware(['auth', 'prevent.dashboard'])->name('administration');
 
 Route::get('/dashboard', function () {
-    return view('dashboard'); // This will load the 'dashboard.blade.php' view.
+    return view('dashboard');
 })->middleware('auth')->name('dashboard');
+
+
+Route::prefix('admin')->group(function () {
+    // ...
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+});
+
 
 // AuthController login route
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
+
+Route::resource('users','App\Http\Controllers\Admin\UserController');
+Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group(function () {
+    Route::resource('reservations', 'ReservationController');
+});
+
