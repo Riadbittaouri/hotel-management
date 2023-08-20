@@ -11,7 +11,15 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
+    /**
+     * Define the relationship with UserActivity model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activities()
+    {
+        return $this->hasMany(UserActivity::class);
+    }
     /**
      * The attributes that are mass assignable.
      *
