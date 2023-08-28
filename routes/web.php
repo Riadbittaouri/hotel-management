@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
+
 
 // Existing routes using Route::middleware and Route::prefix
 Route::middleware(['auth', 'prevent.dashboard'])->group(function () {
@@ -84,3 +86,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->namespace('Admin')->group
     Route::resource('reservations', 'ReservationController');
 });
 
+
+Route::get('/admin/dashboard', 'AdminDashboardController@index')->name('admin.dashboard');
+
+// Add this route to handle profile editing
+Route::get('/profile/edit', 'App\Http\Controllers\ProfileController@edit')->name('profile.edit');
+// Define the route for updating the profile
+Route::post('/profile/update', 'App\Http\Controllers\ProfileController@update')->name('profile.update');

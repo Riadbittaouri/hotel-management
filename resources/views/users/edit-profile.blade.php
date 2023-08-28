@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Edit Profile') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('users.update.profile') }}">
+                    <form method="POST" action="{{ route('profile.update') }}">
                         @csrf
 
                         {{-- Name --}}

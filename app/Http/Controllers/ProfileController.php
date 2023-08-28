@@ -14,16 +14,21 @@ use Illuminate\Support\Facades\Auth;
             $user = Auth::user();
             return view('users.edit-profile', compact('user'));
         }
-    
+        
         public function update(Request $request)
         {
             $user = Auth::user();
-    
-            // Validate the request data here
-            // Update user profile data
-    
-            return redirect()->route('users.edit.profile')->with('success', 'Profile updated successfully.');
+        
+            // Validate the request data here and update user profile data
+            // For example:
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            // ... update other fields as needed
+            $user->save();
+        
+            return redirect()->route('profile.edit')->with('success', 'Profile updated successfully.');
         }
+        
     }
     
 
