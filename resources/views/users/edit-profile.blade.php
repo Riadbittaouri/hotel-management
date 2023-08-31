@@ -8,6 +8,7 @@
                 <div class="card-header">{{ __('Edit Profile') }}</div>
 
                 <div class="card-body">
+                    @auth
                     <form method="POST" action="{{ route('profile.update') }}">
                         @csrf
 
@@ -39,6 +40,9 @@
                             <button type="submit" class="btn btn-primary">{{ __('Update Profile') }}</button>
                         </div>
                     </form>
+                    @else
+                    <p>Please log in to edit your profile</p>
+                    @endauth
                 </div>
             </div>
         </div>

@@ -15,13 +15,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 @if (auth()->user()->is_admin)
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('users.index') }}">Manage Users</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('users.index') }}">Manage Users</a>
+                    </li>
                 @else
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('profile.edit') }}">Edit Profile</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('manage.reservations') }}">Manage Reservations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('profile.edit') }}">Edit Profile</a>
+                    </li>
                 @endif
                 <li class="nav-item">
                     <form action="{{ route('logout') }}" method="POST">
@@ -30,6 +33,8 @@
                     </form>
                 </li>
             </ul>
+            
+            
         </div>
     </nav>
     
