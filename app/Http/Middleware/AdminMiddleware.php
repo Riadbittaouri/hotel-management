@@ -1,18 +1,19 @@
 <?php
-// app/Http/Middleware/AdminMiddleware.php
+
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 
 class AdminMiddleware
 {
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->is_admin) {
+        // Check if the user is an admin (you'll need to define your logic here)
+        if (auth()->user()->is_admin) {
             return $next($request);
         }
 
-        abort(403, 'Unauthorized action.');
+        return redirect()->route('dashboard'); // Redirect to a different route for non-admin users.
     }
 }
-

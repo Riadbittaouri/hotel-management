@@ -26,7 +26,9 @@ class Kernel extends ConsoleKernel
 
     protected $routeMiddleware = [
         // ... other middlewares ...
-        'prevent.dashboard' => \App\Http\Middleware\PreventDashboardRedirect::class,
+        //'prevent.dashboard' => \App\Http\Middleware\PreventDashboardRedirect::class,
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+
     ];
     
 }

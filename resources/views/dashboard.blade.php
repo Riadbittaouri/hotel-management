@@ -16,7 +16,6 @@
                                 <thead>
                                     <tr>
                                         <th>User ID</th>
-                                        <th>Login Time</th>
                                         <th>Activity Time</th>
                                     </tr>
                                 </thead>
@@ -27,7 +26,6 @@
                                     @foreach ($userActivities as $activity)
                                         <tr>
                                             <td>{{ $activity->user_id }}</td>
-                                            <td>{{ $activity->login_time }}</td>
                                             <td>{{ $activity->created_at }}</td>
                                         </tr>
                                     @endforeach
